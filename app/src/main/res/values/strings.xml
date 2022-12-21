@@ -2,4 +2,9 @@
     <string name="app_name">Notifications</string>
     <string name="channel_name">Simona\'s notification channel</string>
     <string name="channel_description">This is Simona\'s notification channel description </string>
+    <string name="send_notification">Send notification</string>
+    <string name="remove_notification">Remove notification</string>
+    <string name="notification_title">New grade</string>
+    <string name="notification_text">Your homework has been graded</string>
+    <string name="notification_subtext">Tap to visit the NBU website</string>
 </resources>
