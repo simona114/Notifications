@@ -4,22 +4,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
     Button btnStart, btnStop;
-    int notificationId = 78789878;
-    String CHANNEL_ID = "nbu_lectures";
+
+    int NOTIFICATION_ID = 1234;
+    String CHANNEL_ID = "nbu_channel";
+
     PendingIntent pendingIntent;
 
     @Override
@@ -29,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
         btnStart = findViewById(R.id.btnOpenNotification);
         btnStop = findViewById(R.id.btnCloseNotification);
+
+        createNotificationChannel();
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,11 +51,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        createNotificationChannel();
     }
 
     private void cancelMyNotification() {
-        //todo
+        NotificationManager notificationManager = (NotificationManager) getApplicationContext()
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(NOTIFICATION_ID);
     }
 
     /*
@@ -73,27 +81,31 @@ public class MainActivity extends AppCompatActivity {
                 .setSubText("Tap to view the NBU website")
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText("Your notification content"))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setDefaults(Notification.DEFAULT_ALL)
                 // Sets the intent that will be fired when the user taps the notification
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(notificationId, builder.build());
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
 
     }
 
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channel_name = getString(R.string.channel_name);
+            CharSequence channel_name = getString(R.string.channel_name);
             String channel_description = getString(R.string.channel_description);
-            int channel_importance = NotificationManager.IMPORTANCE_DEFAULT;
+            int channel_importance = NotificationManager.IMPORTANCE_HIGH;
 
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, channel_name, channel_importance);
             channel.setDescription(channel_description);
+            channel.enableVibration(true);
 
+            // Register the channel in the system
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
+
         }
     }
 

@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Notifications</string>
-    <string name="channel_name">general</string>
-    <string name="channel_description">description</string>
+    <string name="channel_name">Simona\'s notification channel</string>
+    <string name="channel_description">This is Simona\'s notification channel description </string>
 </resources>
