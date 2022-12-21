@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnStart.setOnClickListener(new View.OnClickListener() {
+        btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cancelMyNotification();
